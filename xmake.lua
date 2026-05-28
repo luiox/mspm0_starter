@@ -46,7 +46,11 @@ target("mspmo_demo")
     add_files(path.join(freertos_path, "portable/GCC/ARM_CM0/*.c"))
     add_files(path.join(freertos_path, "portable/MemMang/heap_4.c"))
     add_includedirs("src/port/freertos")
-
+    -- cmsis-os2
+    local cmsis_os2_path = path.join(third_party_path, "FreeRTOS/Source/CMSIS_RTOS_V2")
+    add_includedirs(cmsis_os2_path)
+    add_files(path.join(cmsis_os2_path, "*.c"))
+    add_defines("USE_CUSTOM_SYSTICK_HANDLER_IMPLEMENTATION")
     ---------------------------------------------------------------------------
     -- 编译配置
 

@@ -22,8 +22,8 @@ int old_main(void)
     atk_ms901m_uart_init();
     ISR_Enable();
 
-    //pid_init(&motorA, DELTA_PID, 0.005, 18.9, 0.001);//增量式速度闭环PID
-    //pid_init(&motorB, DELTA_PID, 0.005, 18.9, 0.001);//增量式速度闭环PID
+    //ppid_init(&motorA, DELTA_PID, 0.005, 18.9, 0.001);//增量式速度闭环PID
+    //ppid_init(&motorB, DELTA_PID, 0.005, 18.9, 0.001);//增量式速度闭环PID
     
     motor_on();
 
@@ -48,12 +48,12 @@ int old_main(void)
             angle.target = (ang1 + ang2 + ang3)/3.0;
             First_flag = 1;
             LED_GREEN_OFF
-            /* pid_init(&angle, POSITION_PID, 0.855, 0, 0.1);///////
+            /* ppid_init(&angle, POSITION_PID, 0.855, 0, 0.1);///////
             basespeed = 50;////// */
         }
         /* if(First_flag == 1)
         {
-            pid_init(&angle, POSITION_PID, 10, 0, 0.001);
+            ppid_init(&angle, POSITION_PID, 10, 0, 0.001);
             basespeed = 0.2;
             angle.now = attitude_dat.yaw;
             pid_cal(&angle);
@@ -236,7 +236,7 @@ int old_main(void)
             {
                 case 0://初始化
                     basespeed = 0.3;
-                    pid_init(&angle, POSITION_PID, 25, 0, 0);
+                    ppid_init(&angle, POSITION_PID, 25, 0, 0);
                     Line_flag = 0;
                     while(Line_flag == 0)   duanlu();
                     workstep++;
@@ -263,8 +263,8 @@ int old_main(void)
             {
                 case 0://初始化
                     basespeed = 0.3;
-                    pid_init(&angle, POSITION_PID, KP_angle, 0, 0);
-                    pid_init(&trace_pid, POSITION_PID, KP_trace, 0, 0.01);
+                    ppid_init(&angle, POSITION_PID, KP_angle, 0, 0);
+                    ppid_init(&trace_pid, POSITION_PID, KP_trace, 0, 0.01);
                     trace_pid.target = 0;
                     angle_record = angle.target-180;
                     workstep++;
@@ -285,8 +285,8 @@ int old_main(void)
 
                 case 3://第二个断路
                     shengguang();
-                    pid_init(&angle, POSITION_PID, KP_angle, 0, 0);
-                    pid_init(&trace_pid, POSITION_PID, KP_trace, 0, 0.01);
+                    ppid_init(&angle, POSITION_PID, KP_angle, 0, 0);
+                    ppid_init(&trace_pid, POSITION_PID, KP_trace, 0, 0.01);
                     trace_pid.target = 0;
                     angle.target = angle_record;
                     Line_flag = 0;
@@ -335,10 +335,10 @@ int old_main(void)
                 case 0://初始化
                     //basespeed = 0.25;
                     basespeed = 0.35;
-                    pid_init(&trace_pid, POSITION_PID, KP_trace, 0, 0.01); //0.35适用
-                    //pid_init(&trace_pid, POSITION_PID, 60, 0, 0);
-                    //pid_init(&angle, POSITION_PID, 15, 0, 0.01); //0.35适用
-                    pid_init(&angle, POSITION_PID, KP_angle, 0, 0);
+                    ppid_init(&trace_pid, POSITION_PID, KP_trace, 0, 0.01); //0.35适用
+                    //ppid_init(&trace_pid, POSITION_PID, 60, 0, 0);
+                    //ppid_init(&angle, POSITION_PID, 15, 0, 0.01); //0.35适用
+                    ppid_init(&angle, POSITION_PID, KP_angle, 0, 0);
 
 
                     trace_pid.target = 0;
@@ -358,7 +358,7 @@ int old_main(void)
                 break;
 
                 case 1://第一个断路
-/*                     pid_init(&angle, POSITION_PID, 15, 0, 0);
+/*                     ppid_init(&angle, POSITION_PID, 15, 0, 0);
                     angle.target = angle_record_3;
                     while(Line_flag == 0)
                     {
@@ -368,7 +368,7 @@ int old_main(void)
                         break;
                     } */
 
-                    pid_init(&angle, POSITION_PID, KP_angle, 0, 0);
+                    ppid_init(&angle, POSITION_PID, KP_angle, 0, 0);
 
 
                     angle.target = angle_record_3 - 60;
@@ -396,7 +396,7 @@ int old_main(void)
                         }
                     }
 
-                    pid_init(&angle, POSITION_PID, KP_angle, 0, 0);
+                    ppid_init(&angle, POSITION_PID, KP_angle, 0, 0);
 
 
                     angle.target = angle_record_3;
@@ -419,7 +419,7 @@ int old_main(void)
                 break;
 
                 case 3://第二个断路
-                    /* pid_init(&angle, POSITION_PID, 15, 0, 0);
+                    /* ppid_init(&angle, POSITION_PID, 15, 0, 0);
                     angle.target = angle_record_3 - 180;
                     while(Line_flag == 0)
                     {
@@ -429,7 +429,7 @@ int old_main(void)
                         break;
                     } */
                     basespeed = 0.35;
-                    pid_init(&angle, POSITION_PID, KP_angle, 0, 0);
+                    ppid_init(&angle, POSITION_PID, KP_angle, 0, 0);
 
 
                     angle.target = angle_record_3 - 120;
@@ -457,7 +457,7 @@ int old_main(void)
                         }
                     }
 
-                    pid_init(&angle, POSITION_PID, KP_angle, 0, 0);
+                    ppid_init(&angle, POSITION_PID, KP_angle, 0, 0);
 
 
 
@@ -475,7 +475,7 @@ int old_main(void)
                     if(task4_jishu != 3)
                     {
                         basespeed = 0.35;
-                        pid_init(&trace_pid, POSITION_PID, KP_trace, 0, 0.01);
+                        ppid_init(&trace_pid, POSITION_PID, KP_trace, 0, 0.01);
                         trace_pid.target = 0;
                         Line_flag_task2 = 1;
                         while(Line_flag_task2 == 1)   Trace_pid_test();
@@ -486,7 +486,7 @@ int old_main(void)
                     else
                     {
                         basespeed = 0.3;
-                        pid_init(&trace_pid, POSITION_PID,KP_trace, 0, 0.01);
+                        ppid_init(&trace_pid, POSITION_PID,KP_trace, 0, 0.01);
                         trace_pid.target = 0;
                         Line_flag_task2 = 1;
                         while(Line_flag_task2 == 1)   Trace_pid_test();
@@ -531,7 +531,7 @@ int old_main(void)
                 case 0://初始化
                     //basespeed = 0.25;
                     basespeed = 0.25;
-                    pid_init(&angle, POSITION_PID, KP_angle, 0, 0);
+                    ppid_init(&angle, POSITION_PID, KP_angle, 0, 0);
                     if(task4_jishu == 0)
                     {
                         angle_record_3 = angle.target;
@@ -565,7 +565,7 @@ int old_main(void)
                 break;
 
                 case 3://第二个断路
-                    pid_init(&angle, POSITION_PID, KP_angle, 0, 0);
+                    ppid_init(&angle, POSITION_PID, KP_angle, 0, 0);
                     angle.target = angle_record;
                     Line_flag = 0;
                     while(Line_flag == 0)   duanlu();
@@ -617,10 +617,10 @@ int old_main(void)
                 case 0://初始化
                     //basespeed = 0.25;
                     basespeed = 0.3;
-                    pid_init(&trace_pid, POSITION_PID, KP_trace, 0, 0.01); //0.35适用
-                    //pid_init(&trace_pid, POSITION_PID, 60, 0, 0);
-                    //pid_init(&angle, POSITION_PID, 15, 0, 0.01); //0.35适用
-                    pid_init(&angle, POSITION_PID, KP_angle, 0, 0);
+                    ppid_init(&trace_pid, POSITION_PID, KP_trace, 0, 0.01); //0.35适用
+                    //ppid_init(&trace_pid, POSITION_PID, 60, 0, 0);
+                    //ppid_init(&angle, POSITION_PID, 15, 0, 0.01); //0.35适用
+                    ppid_init(&angle, POSITION_PID, KP_angle, 0, 0);
 
 
                     trace_pid.target = 0;
@@ -640,7 +640,7 @@ int old_main(void)
                 break;
 
                 case 1://第一个断路
-/*                     pid_init(&angle, POSITION_PID, 15, 0, 0);
+/*                     ppid_init(&angle, POSITION_PID, 15, 0, 0);
                     angle.target = angle_record_3;
                     while(Line_flag == 0)
                     {
@@ -650,7 +650,7 @@ int old_main(void)
                         break;
                     } */
 
-                    pid_init(&angle, POSITION_PID, KP_angle, 0, 0);
+                    ppid_init(&angle, POSITION_PID, KP_angle, 0, 0);
 
 
                     angle.target = angle_record_3 - 60;
@@ -678,7 +678,7 @@ int old_main(void)
                         }
                     }
 
-                    pid_init(&angle, POSITION_PID, KP_angle, 0, 0);
+                    ppid_init(&angle, POSITION_PID, KP_angle, 0, 0);
 
 
                     angle.target = angle_record_3;
@@ -701,7 +701,7 @@ int old_main(void)
                 break;
 
                 case 3://第二个断路
-                    /* pid_init(&angle, POSITION_PID, 15, 0, 0);
+                    /* ppid_init(&angle, POSITION_PID, 15, 0, 0);
                     angle.target = angle_record_3 - 180;
                     while(Line_flag == 0)
                     {
@@ -711,7 +711,7 @@ int old_main(void)
                         break;
                     } */
                     basespeed = 0.3;
-                    pid_init(&angle, POSITION_PID, KP_angle, 0, 0);
+                    ppid_init(&angle, POSITION_PID, KP_angle, 0, 0);
 
 
                     angle.target = angle_record_3 - 120;
@@ -739,7 +739,7 @@ int old_main(void)
                         }
                     }
 
-                    pid_init(&angle, POSITION_PID, KP_angle, 0, 0);
+                    ppid_init(&angle, POSITION_PID, KP_angle, 0, 0);
 
 
 
@@ -757,7 +757,7 @@ int old_main(void)
                     if(task4_jishu != 3)
                     {
                         basespeed = 0.3;
-                        pid_init(&trace_pid, POSITION_PID, KP_trace, 0, 0.01);
+                        ppid_init(&trace_pid, POSITION_PID, KP_trace, 0, 0.01);
                         trace_pid.target = 0;
                         Line_flag_task2 = 1;
                         while(Line_flag_task2 == 1)   Trace_pid_test();
@@ -768,7 +768,7 @@ int old_main(void)
                     else
                     {
                         basespeed = 0.3;
-                        pid_init(&trace_pid, POSITION_PID, KP_trace, 0, 0.01);
+                        ppid_init(&trace_pid, POSITION_PID, KP_trace, 0, 0.01);
                         trace_pid.target = 0;
                         Line_flag_task2 = 1;
                         while(Line_flag_task2 == 1)   Trace_pid_test();
@@ -810,10 +810,10 @@ int old_main(void)
                 case 0://初始化
                     //basespeed = 0.25;
                     basespeed = 0.35;
-                    pid_init(&trace_pid, POSITION_PID, KP_trace, 0, 0.01); //0.35适用
-                    //pid_init(&trace_pid, POSITION_PID, 60, 0, 0);
-                    //pid_init(&angle, POSITION_PID, 15, 0, 0.01); //0.35适用
-                    pid_init(&angle, POSITION_PID, KP_angle, 0, 0);
+                    ppid_init(&trace_pid, POSITION_PID, KP_trace, 0, 0.01); //0.35适用
+                    //ppid_init(&trace_pid, POSITION_PID, 60, 0, 0);
+                    //ppid_init(&angle, POSITION_PID, 15, 0, 0.01); //0.35适用
+                    ppid_init(&angle, POSITION_PID, KP_angle, 0, 0);
 
 
                     trace_pid.target = 0;
@@ -833,7 +833,7 @@ int old_main(void)
                 break;
 
                 case 1://第一个断路
-/*                     pid_init(&angle, POSITION_PID, 15, 0, 0);
+/*                     ppid_init(&angle, POSITION_PID, 15, 0, 0);
                     angle.target = angle_record_3;
                     while(Line_flag == 0)
                     {
@@ -843,7 +843,7 @@ int old_main(void)
                         break;
                     } */
 
-                    pid_init(&angle, POSITION_PID, KP_angle, 0, 0);
+                    ppid_init(&angle, POSITION_PID, KP_angle, 0, 0);
 
 
                     angle.target = angle_record_3 - 60;
@@ -871,7 +871,7 @@ int old_main(void)
                         }
                     }
 
-                    pid_init(&angle, POSITION_PID, KP_angle, 0, 0);
+                    ppid_init(&angle, POSITION_PID, KP_angle, 0, 0);
 
 
                     angle.target = angle_record_3;
@@ -894,7 +894,7 @@ int old_main(void)
                 break;
 
                 case 3://第二个断路
-                    /* pid_init(&angle, POSITION_PID, 15, 0, 0);
+                    /* ppid_init(&angle, POSITION_PID, 15, 0, 0);
                     angle.target = angle_record_3 - 180;
                     while(Line_flag == 0)
                     {
@@ -904,7 +904,7 @@ int old_main(void)
                         break;
                     } */
                     basespeed = 0.35;
-                    pid_init(&angle, POSITION_PID, KP_angle, 0, 0);
+                    ppid_init(&angle, POSITION_PID, KP_angle, 0, 0);
 
 
                     angle.target = angle_record_3 - 120;
@@ -932,7 +932,7 @@ int old_main(void)
                         }
                     }
 
-                    pid_init(&angle, POSITION_PID, KP_angle, 0, 0);
+                    ppid_init(&angle, POSITION_PID, KP_angle, 0, 0);
 
 
 
@@ -950,7 +950,7 @@ int old_main(void)
                     if(task4_jishu != 3)
                     {
                         basespeed = 0.35;
-                        pid_init(&trace_pid, POSITION_PID, KP_trace, 0, 0.01);
+                        ppid_init(&trace_pid, POSITION_PID, KP_trace, 0, 0.01);
                         trace_pid.target = 0;
                         Line_flag_task2 = 1;
                         while(Line_flag_task2 == 1)   Trace_pid_test();
@@ -961,7 +961,7 @@ int old_main(void)
                     else
                     {
                         basespeed = 0.3;
-                        pid_init(&trace_pid, POSITION_PID, KP_trace, 0, 0.01);
+                        ppid_init(&trace_pid, POSITION_PID, KP_trace, 0, 0.01);
                         trace_pid.target = 0;
                         Line_flag_task2 = 1;
                         while(Line_flag_task2 == 1)   Trace_pid_test();
@@ -1004,10 +1004,10 @@ int old_main(void)
                 case 0://初始化
                     //basespeed = 0.25;
                     basespeed = 0.4;
-                    pid_init(&trace_pid, POSITION_PID, KP_trace, 0, 0.01); //0.35适用
-                    //pid_init(&trace_pid, POSITION_PID, 60, 0, 0);
-                    //pid_init(&angle, POSITION_PID, 15, 0, 0.01); //0.35适用
-                    pid_init(&angle, POSITION_PID, KP_angle, 0, 0);
+                    ppid_init(&trace_pid, POSITION_PID, KP_trace, 0, 0.01); //0.35适用
+                    //ppid_init(&trace_pid, POSITION_PID, 60, 0, 0);
+                    //ppid_init(&angle, POSITION_PID, 15, 0, 0.01); //0.35适用
+                    ppid_init(&angle, POSITION_PID, KP_angle, 0, 0);
                     trace_pid.target = 0;
                     if(task4_jishu == 0)
                     {
@@ -1025,7 +1025,7 @@ int old_main(void)
                 break;
 
                 case 1://第一个断路
-/*                     pid_init(&angle, POSITION_PID, 15, 0, 0);
+/*                     ppid_init(&angle, POSITION_PID, 15, 0, 0);
                     angle.target = angle_record_3;
                     while(Line_flag == 0)
                     {
@@ -1035,7 +1035,7 @@ int old_main(void)
                         break;
                     } */
 
-                    pid_init(&angle, POSITION_PID, KP_angle, 0, 0.);
+                    ppid_init(&angle, POSITION_PID, KP_angle, 0, 0.);
                     angle.target = angle_record_3 - 60;
                     Line_flag = 0;
                     while(Line_flag == 0)
@@ -1061,7 +1061,7 @@ int old_main(void)
                         }
                     }
 
-                    pid_init(&angle, POSITION_PID, KP_angle, 0, 0);
+                    ppid_init(&angle, POSITION_PID, KP_angle, 0, 0);
                     angle.target = angle_record_3;
                     while(Line_flag == 0)
                     {
@@ -1082,7 +1082,7 @@ int old_main(void)
                 break;
 
                 case 3://第二个断路
-                    /* pid_init(&angle, POSITION_PID, 15, 0, 0);
+                    /* ppid_init(&angle, POSITION_PID, 15, 0, 0);
                     angle.target = angle_record_3 - 180;
                     while(Line_flag == 0)
                     {
@@ -1092,7 +1092,7 @@ int old_main(void)
                         break;
                     } */
                     basespeed = 0.4;
-                    pid_init(&angle, POSITION_PID, KP_angle, 0, 0);
+                    ppid_init(&angle, POSITION_PID, KP_angle, 0, 0);
                     angle.target = angle_record_3 - 120;
                     Line_flag = 0;
                     while(Line_flag == 0)
@@ -1118,7 +1118,7 @@ int old_main(void)
                         }
                     }
 
-                    pid_init(&angle, POSITION_PID, KP_angle, 0, 0);
+                    ppid_init(&angle, POSITION_PID, KP_angle, 0, 0);
                     angle.target = angle_record_3 - 180;
                     while(Line_flag == 0)
                     {
@@ -1133,7 +1133,7 @@ int old_main(void)
                     if(task4_jishu != 3)
                     {
                         basespeed = 0.45;
-                        pid_init(&trace_pid, POSITION_PID, KP_trace, 0, 0.01);
+                        ppid_init(&trace_pid, POSITION_PID, KP_trace, 0, 0.01);
                         trace_pid.target = 0;
                         Line_flag_task2 = 1;
                         while(Line_flag_task2 == 1)   Trace_pid_test();
@@ -1144,7 +1144,7 @@ int old_main(void)
                     else
                     {
                         basespeed = 0.3;
-                        pid_init(&trace_pid, POSITION_PID, KP_trace, 0, 0.01);
+                        ppid_init(&trace_pid, POSITION_PID, KP_trace, 0, 0.01);
                         trace_pid.target = 0;
                         Line_flag_task2 = 1;
                         while(Line_flag_task2 == 1)   Trace_pid_test();
@@ -1201,10 +1201,10 @@ int old_main(void)
                 case 0://初始化
                     //basespeed = 0.25;
                     basespeed = 0.45;
-                    pid_init(&trace_pid, POSITION_PID, KP_trace, 0, 0.01); //0.35适用
-                    //pid_init(&trace_pid, POSITION_PID, 60, 0, 0);
-                    //pid_init(&angle, POSITION_PID, 15, 0, 0.01); //0.35适用
-                    pid_init(&angle, POSITION_PID, KP_angle, 0, 0);
+                    ppid_init(&trace_pid, POSITION_PID, KP_trace, 0, 0.01); //0.35适用
+                    //ppid_init(&trace_pid, POSITION_PID, 60, 0, 0);
+                    //ppid_init(&angle, POSITION_PID, 15, 0, 0.01); //0.35适用
+                    ppid_init(&angle, POSITION_PID, KP_angle, 0, 0);
                     trace_pid.target = 0;
                     if(task4_jishu == 0)
                     {
@@ -1222,7 +1222,7 @@ int old_main(void)
                 break;
 
                 case 1://第一个断路
-/*                     pid_init(&angle, POSITION_PID, 15, 0, 0);
+/*                     ppid_init(&angle, POSITION_PID, 15, 0, 0);
                     angle.target = angle_record_3;
                     while(Line_flag == 0)
                     {
@@ -1232,7 +1232,7 @@ int old_main(void)
                         break;
                     } */
 
-                    pid_init(&angle, POSITION_PID, KP_angle, 0, 0);
+                    ppid_init(&angle, POSITION_PID, KP_angle, 0, 0);
                     angle.target = angle_record_3 - 60;
                     Line_flag = 0;
                     while(Line_flag == 0)
@@ -1258,7 +1258,7 @@ int old_main(void)
                         }
                     }
 
-                    pid_init(&angle, POSITION_PID, KP_angle, 0, 0);
+                    ppid_init(&angle, POSITION_PID, KP_angle, 0, 0);
                     angle.target = angle_record_3;
                     while(Line_flag == 0)
                     {
@@ -1279,7 +1279,7 @@ int old_main(void)
                 break;
 
                 case 3://第二个断路
-                    /* pid_init(&angle, POSITION_PID, 15, 0, 0);
+                    /* ppid_init(&angle, POSITION_PID, 15, 0, 0);
                     angle.target = angle_record_3 - 180;
                     while(Line_flag == 0)
                     {
@@ -1289,7 +1289,7 @@ int old_main(void)
                         break;
                     } */
                     basespeed = 0.45;
-                    pid_init(&angle, POSITION_PID, KP_angle, 0, 0);
+                    ppid_init(&angle, POSITION_PID, KP_angle, 0, 0);
                     angle.target = angle_record_3 - 120;
                     Line_flag = 0;
                     while(Line_flag == 0)
@@ -1315,7 +1315,7 @@ int old_main(void)
                         }
                     }
 
-                    pid_init(&angle, POSITION_PID, KP_angle, 0, 0);
+                    ppid_init(&angle, POSITION_PID, KP_angle, 0, 0);
                     angle.target = angle_record_3 - 180;
                     while(Line_flag == 0)
                     {
@@ -1330,7 +1330,7 @@ int old_main(void)
                     if(task4_jishu != 3)
                     {
                         basespeed = 0.45;
-                        pid_init(&trace_pid, POSITION_PID, KP_trace, 0, 0.01);
+                        ppid_init(&trace_pid, POSITION_PID, KP_trace, 0, 0.01);
                         trace_pid.target = 0;
                         Line_flag_task2 = 1;
                         while(Line_flag_task2 == 1)   Trace_pid_test();
@@ -1341,7 +1341,7 @@ int old_main(void)
                     else
                     {
                         basespeed = 0.3;
-                        pid_init(&trace_pid, POSITION_PID, KP_trace, 0, 0.01);
+                        ppid_init(&trace_pid, POSITION_PID, KP_trace, 0, 0.01);
                         trace_pid.target = 0;
                         Line_flag_task2 = 1;
                         while(Line_flag_task2 == 1)   Trace_pid_test();
@@ -1398,9 +1398,9 @@ int old_main(void)
         else if(TASK == 11)//循迹测试
         {
             basespeed = 0.35;
-            pid_init(&trace_pid, POSITION_PID, KP_trace, 0, 0); //0.35适用
-            //pid_init(&trace_pid, POSITION_PID, 60, 0, 0);
-            pid_init(&angle, POSITION_PID, KP_angle, 0, 0);
+            ppid_init(&trace_pid, POSITION_PID, KP_trace, 0, 0); //0.35适用
+            //ppid_init(&trace_pid, POSITION_PID, 60, 0, 0);
+            ppid_init(&angle, POSITION_PID, KP_angle, 0, 0);
             trace_pid.target = 0;
             while(1) Trace_pid_test();
         }
@@ -1411,7 +1411,7 @@ int old_main(void)
         else if(TASK == 10)//角度测试
         {
             basespeed = 0.25;
-            pid_init(&angle, POSITION_PID, KP_angle, 0, 0.0001);
+            ppid_init(&angle, POSITION_PID, KP_angle, 0, 0.0001);
             angle.target = 180;
             //断路测试
             //Line_flag = 0;

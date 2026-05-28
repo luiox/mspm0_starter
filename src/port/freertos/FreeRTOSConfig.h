@@ -43,6 +43,15 @@
 #ifndef FREERTOS_CONFIG_H
 #define FREERTOS_CONFIG_H
 
+
+#if defined(__ICCARM__) || defined(__CC_ARM) || defined(__GNUC__)
+  #include <stdint.h>
+  extern uint32_t SystemCoreClock;
+#endif
+#ifndef CMSIS_device_header
+#define CMSIS_device_header "ti_msp_dl_config.h"
+#endif /* CMSIS_device_header */
+
 /******************************************************************************/
 /* Hardware description related definitions. **********************************/
 /******************************************************************************/
@@ -110,7 +119,7 @@
 /* configMAX_PRIORITIES Sets the number of available task priorities.  Tasks can
  * be assigned priorities of 0 to (configMAX_PRIORITIES - 1).  Zero is the lowest
  * priority. */
-#define configMAX_PRIORITIES                       10UL
+#define configMAX_PRIORITIES                       56UL
 
 /* configMINIMAL_STACK_SIZE defines the size of the stack used by the Idle task
  * (in words, not in bytes!).  The kernel does not use this constant for any other
@@ -602,16 +611,15 @@
 #define INCLUDE_vTaskDelay                     1
 #define INCLUDE_xTaskGetSchedulerState         1
 #define INCLUDE_xTaskGetCurrentTaskHandle      1
-#define INCLUDE_uxTaskGetStackHighWaterMark    0
+#define INCLUDE_uxTaskGetStackHighWaterMark    1
 #define INCLUDE_xTaskGetIdleTaskHandle         0
 #define INCLUDE_eTaskGetState                  1
 #define INCLUDE_xEventGroupSetBitFromISR       1
-#define INCLUDE_xTimerPendFunctionCall         0
+#define INCLUDE_xTimerPendFunctionCall         1
 #define INCLUDE_xTaskAbortDelay                0
 #define INCLUDE_xTaskGetHandle                 0
 #define INCLUDE_xTaskResumeFromISR             0
-#define INCLUDE_xSemaphoreGetMutexHolder 	   0
-#define INCLUDE_xTimerPendFunctionCall         0
+#define INCLUDE_xSemaphoreGetMutexHolder 	   1
 
 
 /*

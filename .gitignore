@@ -388,3 +388,4 @@ keil/EventRecorderStub.scvd
 targetConfigs/
 Event.dot
 keil/mspm0g3507.sct
+!src/log/

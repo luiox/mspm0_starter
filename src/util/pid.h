@@ -1,39 +1,58 @@
-#ifndef _PID_H_
-#define _PID_H_
-#include "headfile.h"
+#ifndef ROBOT_SYS_PID_H
+#define ROBOT_SYS_PID_H
 
-enum
+#include "../util/datatype.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+typedef enum pid_mode_enum
 {
-  POSITION_PID = 0,  // 位置式
-  DELTA_PID,         // 增量式
-};
+    PID_MODE_POSITION  = 0,
+    PID_MODE_INCREMENT = 1,
+} pid_mode_t;
 
-typedef struct
+typedef struct pid_config
 {
-	float target;	
-	float now;
-	float error[3];		
-	float p,i,d;
-	float pout, dout, iout;
-	float out;   
-	uint32_t pid_mode;
-}pid_t;
+    f32        kp;
+    f32        ki;
+    f32        kd;
+    f32        max_output;
+    f32        max_integral;
+    f32        integral_band;
+    pid_mode_t mode;
+} pid_config_t;
 
-void pid_cal(pid_t *pid);
-void pid_control(void);
-void pid_init(pid_t *pid, uint32_t mode, float p, float i, float d);
-void motor_target_set(float spe1, float spe2);
-void pidout_limit(pid_t *pid);
-void datavision_send();
-int Position_PID (int Encoder,int Target);
-float Yaw_error_zzk(float Target, float Now);
-float fabs_zzk(float value);
-void pid_cal_trace(pid_t *pid);
+typedef struct pid_state
+{
+    f32 target;
+    f32 output;
+    f32 p_out;
+    f32 i_out;
+    f32 d_out;
+    f32 error;
+    f32 prev_error;
+    f32 prev_prev_error;
+    f32 integral;
+} pid_state_t;
 
-extern pid_t motorA;
-extern pid_t motorB;
-extern pid_t angle;
-extern pid_t trace_pid;
-extern atk_ms901m_attitude_data_t attitude_dat;
+typedef struct pid
+{
+    pid_config_t config;
+    pid_state_t  state;
+} pid_t;
+
+void pid_init(pid_t* self, pid_mode_t mode);
+void pid_reset(pid_t* self);
+void pid_set_target(pid_t* self, f32 target);
+void pid_set_params(pid_t* self, f32 kp, f32 ki, f32 kd);
+void pid_set_limits(pid_t* self, f32 max_output, f32 max_integral);
+void pid_set_integral_band(pid_t* self, f32 band);
+f32  pid_calculate(pid_t* self, f32 feedback, f32 delta_t_s);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

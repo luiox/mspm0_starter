@@ -15,7 +15,7 @@
 #include "atk_ms901m.h"
 
 #include "control.h"
-#include "pid.h"
+#include "ppid.h"
 
 //LED控制宏定义
 #define LED_RED_ON      DL_GPIO_setPins(LEDS_PORT, LEDS_LED2_RED_PIN);
