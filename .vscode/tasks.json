@@ -1,0 +1,15 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build mspm0",
+            "type": "shell",
+            "command": "xmake f -p cross -a arm -m debug ; xmake build mspmo_demo",
+            "problemMatcher": [],          
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}

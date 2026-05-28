@@ -22,6 +22,7 @@
             "servertype": "openocd",
             "searchDir": [],
             "runToEntryPoint": "main",
+            "preLaunchTask": "build mspm0",
             "showDevDebugOutput": "raw"
         }
     ]
