@@ -3,8 +3,13 @@
 
 本仓库已经集成driverlib、freertos、dsp、rtt等组件。
 
+模块驱动可以参考
 
-可以参考的skill
+https://github.com/Torris-Yin/mspm0-modules
+
+https://github.com/libdriver?tab=repositories
+
+skill可以参考
 
 https://github.com/mc3545dada/mspm0-skill
 
