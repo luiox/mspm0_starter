@@ -23,7 +23,31 @@
             "searchDir": [],
             "runToEntryPoint": "main",
             "preLaunchTask": "build mspm0",
-            "showDevDebugOutput": "raw"
+            "showDevDebugOutput": "raw",
+            "liveWatch": {
+                "enabled": true,
+                "samplesPerSecond": 4
+            },
+            // 添加以下 RTT 配置
+            "rttConfig": {
+                "enabled": true,
+                "address": "auto",
+                "clearSearch": false,
+                "decoders": [
+                    {
+                        "label": "",
+                        "port": 0,
+                        "type": "console",
+                        "logfile": "${workspaceRoot}/build/log0.log"
+                    },
+                    {
+                        "label": "",
+                        "port": 1,
+                        "type": "console",
+                        "logfile": "${workspaceRoot}/build/trace1.log"
+                    }
+                ]
+            }
         }
     ]
 }
