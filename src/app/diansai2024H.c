@@ -16,7 +16,7 @@ uint32_t Left_Count_high_1 = 1250;
 uint32_t Left_Count_high_2 = 1270;
 uint32_t KP_trace = 30;
 uint32_t KP_angle = 18;
-int main(void)
+int old_main(void)
 {
     SYSCFG_DL_init();
     atk_ms901m_uart_init();

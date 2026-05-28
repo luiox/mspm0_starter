@@ -95,4 +95,8 @@ target("mspmo_demo")
     -- 5. 用户源码
     add_files("src/**.c")
     add_includedirs("src")
-
+    add_includedirs("src/app")
+    add_includedirs("src/board")
+    add_includedirs("src/model")
+    add_includedirs("src/test")
+    add_includedirs("src/util")
