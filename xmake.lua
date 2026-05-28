@@ -22,25 +22,33 @@ target("mspmo_demo")
     add_rules("util.convert_bin_hex")
 
     ---------------------------------------------------------------------------
-    -- 1. 路径与依赖配置
-    ---------------------------------------------------------------------------
+    -- 库配置
     local root_dir = os.scriptdir()
     local third_party_path = path.join(root_dir, "third_party")
+    -- driverlib
     local driverlib_path = path.join(third_party_path, "ti", "driverlib")
-
-    -- 添加头文件路径
     add_includedirs("third_party")
-    add_includedirs(path.join(third_party_path, "CMSIS/Core/Include"))
-
-    ---------------------------------------------------------------------------
-    -- 2. DriverLib 源码添加
-
     add_files(path.join(driverlib_path, "*.c"))
     add_files(path.join(driverlib_path, "m0p/dl_interrupt.c"))
     add_files(path.join(driverlib_path, "m0p/sysctl/dl_sysctl_mspm0g1x0x_g3x0x.c"))
+    -- cmsis
+    add_includedirs(path.join(third_party_path, "CMSIS/Core/Include"))
+    -- dsp
+    local dsp_path = path.join(third_party_path, "CMSIS/DSP/Source")
+    add_files(path.join(dsp_path, "**.c"))
+    add_includedirs(path.join(third_party_path, "CMSIS/DSP/Include"))
+    add_includedirs(path.join(third_party_path, "CMSIS/DSP/PrivateInclude"))
+    -- freertos
+    local freertos_path = path.join(third_party_path, "FreeRTOS/Source")
+    add_includedirs(path.join(freertos_path, "include"))
+    add_includedirs(path.join(freertos_path, "portable/GCC/ARM_CM0"))
+    add_files(path.join(freertos_path, "*.c"))
+    add_files(path.join(freertos_path, "portable/GCC/ARM_CM0/*.c"))
+    add_files(path.join(freertos_path, "portable/MemMang/heap_4.c"))
+    add_includedirs("src/port/freertos")
 
     ---------------------------------------------------------------------------
-    -- 3. 编译配置逻辑
+    -- 编译配置
 
     -- 添加芯片定义宏
     add_defines("__MSPM0G3507__")
@@ -55,8 +63,7 @@ target("mspmo_demo")
     add_ldflags("-Wl,-Map=" .. path.join("build", "output.map"), {force = true})
 
     ---------------------------------------------------------------------------
-    -- 4. 编译与链接标志
-    ---------------------------------------------------------------------------
+    -- 编译与链接标志
     add_cflags({
         "-mcpu=cortex-m0plus",
         "-mthumb",
@@ -86,7 +93,6 @@ target("mspmo_demo")
 
     ---------------------------------------------------------------------------
     -- 5. 用户源码
-    ---------------------------------------------------------------------------
     add_files("src/**.c")
     add_includedirs("src")
 
